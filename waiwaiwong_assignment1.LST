@@ -1,0 +1,176 @@
+SQL> @waiwaiwong_assignment1.sql
+SQL> SET echo on
+SQL> SET feedback 1
+SQL> SET pagesize 999
+SQL> SET trimspool on
+SQL> SET linesize 200
+SQL> SET tab off
+SQL> CLEAR columns
+SQL> 
+SQL> /* Wai Wai Wong */
+SQL> 
+SQL> /* Query 0 */
+SQL> 
+SQL> SELECT user, sysdate
+  2  FROM dual;
+
+USER                           SYSDATE
+------------------------------ ---------
+WWONG39                        24-JAN-17
+
+1 row selected.
+
+SQL> 
+SQL> /* Query 1 */
+SQL> 
+SQL> SELECT banner
+  2  FROM V$version;
+
+BANNER
+--------------------------------------------------------------------------------
+Oracle Database 12c Enterprise Edition Release 12.1.0.1.0 - 64bit Production
+PL/SQL Release 12.1.0.1.0 - Production
+CORE	12.1.0.1.0	Production
+TNS for Linux: Version 12.1.0.1.0 - Production
+NLSRTL Version 12.1.0.1.0 - Production
+
+5 rows selected.
+
+SQL> 
+SQL> /* Query 2 */
+SQL> 
+SQL> CREATE TABLE books
+  2    (
+  3      ISBN VARCHAR2(10),
+  4      Title VARCHAR2(30),
+  5      PubDate DATE,
+  6      PubID NUMBER(2),
+  7      Cost NUMBER(5,2),
+  8      Retail NUMBER(5,2),
+  9      Discount NUMBER (4,2),
+ 10      CatCode  VARCHAR2(3),
+ 11      CONSTRAINT books_isbn_pk PRIMARY KEY(isbn)
+ 12    );
+
+Table created.
+
+SQL> 
+SQL> /* Query 3 */
+SQL> 
+SQL> INSERT INTO books
+  2  VALUES('1059831198','BODYBUILD IN 10 MINUTES A DAY',TO_DATE('21-JAN-05','DD-MON-YY'),4,18.75,30.95, NULL, 'FIT');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO books
+  2  VALUES ('0401140733','REVENGE OF MICKEY',TO_DATE('14-DEC-05','DD-MON-YY'),1,14.20,22.00, NULL, 'FAL');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO books
+  2  VALUES ('4981341710','BUILDING A CAR WITH TOOTHPICKS',TO_DATE('18-MAR-06','DD-MON-YY'),2,37.80,59.95, 3.00, 'CHN');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO books
+  2  VALUES ('8843172113','DATABASE IMPLEMENTATION',TO_DATE('04-JUN-03','DD-MON-YY'),3,31.40,55.95, NULL, 'COM');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO books
+  2  VALUES ('3437212490','COOKING WITH MUSHROOMS',TO_DATE('28-FEB-04','DD-MON-YY'),4,12.50,19.95, NULL, 'COK');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO books
+  2  VALUES ('3957136468','HOLY GRAIL OF ORACLE',TO_DATE('31-DEC-05','DD-MON-YY'),3,47.25,75.95, 3.80, 'COM');
+
+1 row created.
+
+SQL> 
+SQL> 
+SQL> /* Query 4 */
+SQL> 
+SQL> SELECT *
+  2  FROM books
+  3  WHERE cost > 20;
+
+ISBN       TITLE                          PUBDATE        PUBID       COST     RETAIL   DISCOUNT CAT
+---------- ------------------------------ --------- ---------- ---------- ---------- ---------- ---
+4981341710 BUILDING A CAR WITH TOOTHPICKS 18-MAR-06          2       37.8      59.95          3 CHN
+8843172113 DATABASE IMPLEMENTATION        04-JUN-03          3       31.4      55.95            COM
+3957136468 HOLY GRAIL OF ORACLE           31-DEC-05          3      47.25      75.95        3.8 COM
+
+3 rows selected.
+
+SQL> 
+SQL> /* Query 5 */
+SQL> 
+SQL> SELECT *
+  2  FROM books;
+
+ISBN       TITLE                          PUBDATE        PUBID       COST     RETAIL   DISCOUNT CAT
+---------- ------------------------------ --------- ---------- ---------- ---------- ---------- ---
+1059831198 BODYBUILD IN 10 MINUTES A DAY  21-JAN-05          4      18.75      30.95            FIT
+0401140733 REVENGE OF MICKEY              14-DEC-05          1       14.2         22            FAL
+4981341710 BUILDING A CAR WITH TOOTHPICKS 18-MAR-06          2       37.8      59.95          3 CHN
+8843172113 DATABASE IMPLEMENTATION        04-JUN-03          3       31.4      55.95            COM
+3437212490 COOKING WITH MUSHROOMS         28-FEB-04          4       12.5      19.95            COK
+3957136468 HOLY GRAIL OF ORACLE           31-DEC-05          3      47.25      75.95        3.8 COM
+
+6 rows selected.
+
+SQL> 
+SQL> /* Query 6*/
+SQL> 
+SQL> SELECT ISBN, title, cost
+  2  FROM books;
+
+ISBN       TITLE                                COST
+---------- ------------------------------ ----------
+1059831198 BODYBUILD IN 10 MINUTES A DAY       18.75
+0401140733 REVENGE OF MICKEY                    14.2
+4981341710 BUILDING A CAR WITH TOOTHPICKS       37.8
+8843172113 DATABASE IMPLEMENTATION              31.4
+3437212490 COOKING WITH MUSHROOMS               12.5
+3957136468 HOLY GRAIL OF ORACLE                47.25
+
+6 rows selected.
+
+SQL> 
+SQL> /* Query 7 */
+SQL> 
+SQL> DESC books;
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ ISBN                                                                                                              NOT NULL VARCHAR2(10)
+ TITLE                                                                                                                      VARCHAR2(30)
+ PUBDATE                                                                                                                    DATE
+ PUBID                                                                                                                      NUMBER(2)
+ COST                                                                                                                       NUMBER(5,2)
+ RETAIL                                                                                                                     NUMBER(5,2)
+ DISCOUNT                                                                                                                   NUMBER(4,2)
+ CATCODE                                                                                                                    VARCHAR2(3)
+
+SQL> 
+SQL> /* Query 8 */
+SQL> 
+SQL> SELECT DISTINCT Catcode
+  2  FROM books;
+
+CAT
+---
+COK
+COM
+FAL
+CHN
+FIT
+
+5 rows selected.
+
+SQL> spool off

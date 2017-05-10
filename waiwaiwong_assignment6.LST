@@ -1,0 +1,149 @@
+SQL> @ waiwaiwong_assignment6.sql
+SQL> SET feedback 1
+SQL> SET pagesize 999
+SQL> SET trimspool on
+SQL> SET linesize 200
+SQL> SET tab off
+SQL> CLEAR columns
+SQL> 
+SQL> /* Wai Wai Wong */
+SQL> 
+SQL> /* Query 0 */
+SQL> SELECT user, sysdate
+  2  FROM dual;
+
+USER                           SYSDATE
+------------------------------ ---------
+WWONG39                        27-FEB-17
+
+1 row selected.
+
+SQL> 
+SQL> /* Query 1 */
+SQL> 
+SQL> CREATE TABLE faculty5
+  2  AS
+  3  SELECT faculty_id, name, salary
+  4  FROM faculty
+  5  WHERE dept_id = 5;
+
+Table created.
+
+SQL> 
+SQL> /* Query 2 */
+SQL> 
+SQL> INSERT INTO faculty5
+  2  SELECT faculty_id, name, salary
+  3  FROM faculty
+  4  WHERE dept_id = 3;
+
+1 row created.
+
+SQL> 
+SQL> SELECT *
+  2  FROM faculty5;
+
+FACUL NAME                     SALARY
+----- -------------------- ----------
+32343 El Said                   60000
+58583 Califieri                 62000
+98345 Kim                       80000
+98345 Kim                       80000
+98345 Kim                       80000
+
+5 rows selected.
+
+SQL> 
+SQL> /* Query 3 */
+SQL> 
+SQL> UPDATE course
+  2  SET title = 'Introduction to Relational Databases'
+  3  WHERE course_id = 'CS-347';
+
+1 row updated.
+
+SQL> 
+SQL> /* Query 4 */
+SQL> 
+SQL> UPDATE faculty
+  2  SET salary = salary*1.10
+  3  WHERE dept_id = 2;
+
+3 rows updated.
+
+SQL> 
+SQL> SELECT *
+  2  FROM faculty;
+
+FACUL NAME                    DEPT_ID     SALARY
+----- -------------------- ---------- ----------
+10101 Srinivasan                    2      71500
+12121 Wu                            4      90000
+15151 Mozart                        6      40000
+16665 Einstein                      7      95000
+32343 El Said                       5      60000
+33456 Gold                          7      87000
+45565 Katz                          2      82500
+58583 Califieri                     5      62000
+76544 Singh                         4      80000
+76766 Crick                         1      72000
+83821 Brandt                        2     101200
+98345 Kim                           3      80000
+98377 Brad                          8      80000
+
+13 rows selected.
+
+SQL> 
+SQL> /* Query 5 */
+SQL> 
+SQL> INSERT INTO dept
+  2  (dept_id,dept_name, building, budget)
+  3  VALUES
+  4  (10, 'Mathematics', 'Painter', 200000);
+
+1 row created.
+
+SQL> 
+SQL> /* Query 6*/
+SQL> 
+SQL> UPDATE dept
+  2  SET dept_name = 'Chemistry'
+  3  WHERE dept_id = 10;
+
+1 row updated.
+
+SQL> 
+SQL> /* Query 7 */
+SQL> 
+SQL> INSERT INTO faculty
+  2  (faculty_id, name, dept_id, salary)
+  3  VALUES
+  4  (76665, 'George', 10, 95000);
+
+1 row created.
+
+SQL> 
+SQL> /* Query 8 */
+SQL> 
+SQL> UPDATE faculty
+  2  SET name = 'Alexander'
+  3  WHERE faculty_id = 76665;
+
+1 row updated.
+
+SQL> 
+SQL> /* Query 9 */
+SQL> 
+SQL> DELETE FROM faculty
+  2  WHERE dept_id = 10;
+
+1 row deleted.
+
+SQL> 
+SQL> DELETE FROM dept
+  2  WHERE dept_name = 'Chemistry';
+
+1 row deleted.
+
+SQL> 
+SQL> spool off

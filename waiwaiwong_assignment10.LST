@@ -1,0 +1,255 @@
+SQL> @ waiwaiwong_assignmeent10.sql
+SP2-0310: unable to open file "waiwaiwong_assignmeent10.sql"
+SQL> @ waiwaiwong_assignment10.sql
+SQL> SET feedback 1
+SQL> SET pagesize 999
+SQL> SET trimspool on
+SQL> SET linesize 200
+SQL> SET tab off
+SQL> CLEAR columns
+SQL> 
+SQL> /* Wai Wai Wong */
+SQL> 
+SQL> /* Query 0 */
+SQL> SELECT user, sysdate
+  2  FROM dual;
+
+USER                           SYSDATE
+------------------------------ ---------
+WWONG39                        10-APR-17
+
+1 row selected.
+
+SQL> 
+SQL> /* Query 1 */
+SQL> 
+SQL> select retail, to_char(retail,'L99.99')
+  2  from books;
+
+    RETAIL TO_CHAR(RETAIL,'
+---------- ----------------
+     30.95           $30.95
+        22           $22.00
+     59.95           $59.95
+     55.95           $55.95
+     19.95           $19.95
+     75.95           $75.95
+        25           $25.00
+      54.5           $54.50
+     89.95           $89.95
+     28.75           $28.75
+     29.95           $29.95
+     31.95           $31.95
+     39.95           $39.95
+
+13 rows selected.
+
+SQL> 
+SQL> /* Query 2 */
+SQL> 
+SQL> select pubdate, CAST(pubdate AS varchar2(9))
+  2  from books;
+
+PUBDATE   CAST(PUBD
+--------- ---------
+21-JAN-05 21-JAN-05
+14-DEC-05 14-DEC-05
+18-MAR-06 18-MAR-06
+04-JUN-03 04-JUN-03
+28-FEB-04 28-FEB-04
+31-DEC-05 31-DEC-05
+21-JAN-05 21-JAN-05
+01-MAR-06 01-MAR-06
+17-JUL-04 17-JUL-04
+11-SEP-04 11-SEP-04
+11-NOV-06 11-NOV-06
+09-MAY-03 09-MAY-03
+01-MAY-05 01-MAY-05
+
+13 rows selected.
+
+SQL> 
+SQL> /* Query 3 */
+SQL> 
+SQL> select retail, discount, round(retail*(discount/100),2) AS discount
+  2  from books;
+
+    RETAIL   DISCOUNT   DISCOUNT
+---------- ---------- ----------
+     30.95
+        22
+     59.95          3        1.8
+     55.95
+     19.95
+     75.95        3.8       2.89
+        25
+      54.5
+     89.95        4.5       4.05
+     28.75
+     29.95        1.5        .45
+     31.95
+     39.95
+
+13 rows selected.
+
+SQL> 
+SQL> 
+SQL> /* Query 4 */
+SQL> 
+SQL> select orderid, orderdate, to_char(orderdate, 'YYYY'),
+  2         to_char(orderdate, 'MON-DD-YYYY'), to_char(orderdate, 'HH:MI AM'), to_char(orderdate, 'MM/DD/YY HH24:MI')
+  3  from orders;
+
+   ORDERID ORDERDATE TO_C TO_CHAR(ORDERDATE,'M TO_CHAR( TO_CHAR(ORDERD
+---------- --------- ---- -------------------- -------- --------------
+      1000 31-MAR-09 2009 MAR-31-2009          12:00 AM 03/31/09 00:00
+      1001 31-MAR-09 2009 MAR-31-2009          12:00 AM 03/31/09 00:00
+      1002 31-MAR-09 2009 MAR-31-2009          12:00 AM 03/31/09 00:00
+      1003 01-APR-09 2009 APR-01-2009          12:00 AM 04/01/09 00:00
+      1004 01-APR-09 2009 APR-01-2009          12:00 AM 04/01/09 00:00
+      1005 01-APR-09 2009 APR-01-2009          12:00 AM 04/01/09 00:00
+      1006 01-APR-09 2009 APR-01-2009          12:00 AM 04/01/09 00:00
+      1007 02-APR-09 2009 APR-02-2009          12:00 AM 04/02/09 00:00
+      1008 02-APR-09 2009 APR-02-2009          12:00 AM 04/02/09 00:00
+      1009 03-APR-09 2009 APR-03-2009          12:00 AM 04/03/09 00:00
+      1010 03-APR-09 2009 APR-03-2009          12:00 AM 04/03/09 00:00
+      1011 03-APR-09 2009 APR-03-2009          12:00 AM 04/03/09 00:00
+      1012 03-APR-09 2009 APR-03-2009          12:00 AM 04/03/09 00:00
+      1013 03-APR-09 2009 APR-03-2009          12:00 AM 04/03/09 00:00
+      1014 04-APR-09 2009 APR-04-2009          12:00 AM 04/04/09 00:00
+      1015 04-APR-09 2009 APR-04-2009          12:00 AM 04/04/09 00:00
+      1016 04-APR-09 2009 APR-04-2009          12:00 AM 04/04/09 00:00
+      1017 04-APR-09 2009 APR-04-2009          12:00 AM 04/04/09 00:00
+      1018 05-APR-09 2009 APR-05-2009          12:00 AM 04/05/09 00:00
+      1019 05-APR-09 2009 APR-05-2009          12:00 AM 04/05/09 00:00
+      1020 05-APR-09 2009 APR-05-2009          12:00 AM 04/05/09 00:00
+
+21 rows selected.
+
+SQL> 
+SQL> /* Query 5 */
+SQL> 
+SQL> select orderid, orderdate, (orderdate +2) AS approx_ship_date, shipdate, (shipdate-orderdate) AS days_to_ship
+  2  from orders
+  3  where extract(year from orderdate) = 2009
+  4  and extract(month from orderdate) = 3;
+
+   ORDERID ORDERDATE APPROX_SH SHIPDATE  DAYS_TO_SHIP
+---------- --------- --------- --------- ------------
+      1000 31-MAR-09 02-APR-09 02-APR-09            2
+      1001 31-MAR-09 02-APR-09 01-APR-09            1
+      1002 31-MAR-09 02-APR-09 01-APR-09            1
+
+3 rows selected.
+
+SQL> 
+SQL> /* Query 6*/
+SQL> 
+SQL> select initcap(firstname), initcap(lastname)
+  2  from customers;
+
+INITCAP(FI INITCAP(LA
+---------- ----------
+Bonita     Morales
+Ryan       Thompson
+Leila      Smith
+Thomas     Pierson
+Cindy      Girard
+Meshia     Cruz
+Tammy      Giana
+Kenneth    Jones
+Jorge      Perez
+Jake       Lucas
+Reese      Mcgovern
+William    Mckenzie
+Nicholas   Nguyen
+Jasmine    Lee
+Steve      Schell
+Michell    Daum
+Becca      Nelson
+Greg       Montiasa
+Jennifer   Smith
+Kenneth    Falah
+
+20 rows selected.
+
+SQL> 
+SQL> /* Query 7 */
+SQL> 
+SQL> select to_char(current_date, 'DAY, HH:MI:SS')
+  2  from dual;
+
+TO_CHAR(CURRENT_DATE,'DAY,HH:MI:SS')
+----------------------------------------------
+MONDAY   , 11:07:32
+
+1 row selected.
+
+SQL> 
+SQL> /* Query 8 */
+SQL> 
+SQL> select distinct length(ISBN)
+  2  from books;
+
+LENGTH(ISBN)
+------------
+          10
+
+1 row selected.
+
+SQL> 
+SQL> /* Query 9 */
+SQL> 
+SQL> select title, pubdate, sysdate, trunc(months_between(sysdate,pubdate),0) AS age
+  2  from books;
+
+TITLE                          PUBDATE   SYSDATE          AGE
+------------------------------ --------- --------- ----------
+BODYBUILD IN 10 MINUTES A DAY  21-JAN-05 10-APR-17        146
+REVENGE OF MICKEY              14-DEC-05 10-APR-17        135
+BUILDING A CAR WITH TOOTHPICKS 18-MAR-06 10-APR-17        132
+DATABASE IMPLEMENTATION        04-JUN-03 10-APR-17        166
+COOKING WITH MUSHROOMS         28-FEB-04 10-APR-17        157
+HOLY GRAIL OF ORACLE           31-DEC-05 10-APR-17        135
+HANDCRANKED COMPUTERS          21-JAN-05 10-APR-17        146
+E-BUSINESS THE EASY WAY        01-MAR-06 10-APR-17        133
+PAINLESS CHILD-REARING         17-JUL-04 10-APR-17        152
+THE WOK WAY TO COOK            11-SEP-04 10-APR-17        150
+HOW TO GET FASTER PIZZA        11-NOV-06 10-APR-17        124
+HOW TO MANAGE THE MANAGER      09-MAY-03 10-APR-17        167
+SHORTEST POEMS                 01-MAY-05 10-APR-17        143
+
+13 rows selected.
+
+SQL> 
+SQL> /* Query 10 */
+SQL> 
+SQL> select customerid, substr(zip, 3, 2), instr(customerid, 3)
+  2  from customers;
+
+CUSTOMERID SUBSTR(Z INSTR(CUSTOMERID,3)
+---------- -------- -------------------
+      1001 32                         0
+      1002 40                         0
+      1003 30                         4
+      1004 70                         0
+      1005 11                         0
+      1006 21                         0
+      1007 71                         0
+      1008 00                         0
+      1009 51                         0
+      1010 31                         0
+      1011 60                         0
+      1012 11                         0
+      1013 71                         4
+      1014 41                         0
+      1015 11                         0
+      1016 50                         0
+      1017 00                         0
+      1018 20                         0
+      1019 96                         0
+      1020 60                         0
+
+20 rows selected.
+
+SQL> spool off

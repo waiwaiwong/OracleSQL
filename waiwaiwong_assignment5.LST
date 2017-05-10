@@ -1,0 +1,377 @@
+SQL> spool waiwaiwong1_assignment5.LST
+SQL> @ waiwaiwong_assignment5.sql
+SQL> SET echo on
+SQL> SET feedback 1
+SQL> SET pagesize 999
+SQL> SET trimspool on
+SQL> SET linesize 200
+SQL> SET tab off
+SQL> CLEAR columns
+SQL> 
+SQL> /* Wai Wai Wong */
+SQL> 
+SQL> /* Query 0 */
+SQL> SELECT user, sysdate
+  2  FROM dual;
+
+USER                           SYSDATE
+------------------------------ ---------
+WWONG39                        20-FEB-17
+
+1 row selected.
+
+SQL> 
+SQL> /* Query 1 */
+SQL> 
+SQL> CREATE TABLE shipper
+  2  (shipper_id number(3) not null,
+  3   shipper_name varchar2(30),
+  4   phone varchar2(14),
+  5   fax varchar2(14),
+  6   email_address varchar2(50),
+  7   contact varchar2(30),
+  8   primary key (shipper_id)
+  9   );
+
+Table created.
+
+SQL> 
+SQL> CREATE TABLE shipment
+  2  (shipment_id number(3) not null,
+  3   shipper_id number(3) not null,
+  4   purchasing_agent_id number(3),
+  5   invoice_number number(10),
+  6   origin varchar2(30),
+  7   destination varchar2(30),
+  8   schedule_departure_date date,
+  9   actual_departure_date date,
+ 10   estimated_arrival_date date,
+ 11   primary key (shipment_id),
+ 12   foreign key (shipper_id)
+ 13   references shipper(shipper_id)
+ 14  );
+
+Table created.
+
+SQL> 
+SQL> CREATE TABLE item
+  2  (item_id number(2)not null,
+  3   store_name varchar2(30),
+  4   purchashing_agent_id number(3),
+  5   purchase_date date,
+  6   item_description varchar2(100),
+  7   category varchar2(50),
+  8   price_usd number(10),
+  9   primary key (item_id)
+ 10  );
+
+Table created.
+
+SQL> 
+SQL> CREATE TABLE shipment_item
+  2  (shipment_id number(3) not null,
+  3   shipment_item_id number(3)not null,
+  4   item_id number(2) not null,
+  5   insured_value number(7),
+  6   constraint pk_id primary key (shipment_id, shipment_item_id),
+  7   constraint fk_shipmentid foreign key (shipment_id)
+  8   references shipment(shipment_id),
+  9   constraint fk_item foreign key(item_id)
+ 10   references item(item_id)
+ 11  );
+
+Table created.
+
+SQL> 
+SQL> 
+SQL> /* Query 2 */
+SQL> 
+SQL> @insert_data_CI_database1.sql
+SQL> /* ****   SHIPPER Data   ***********************************************************/
+SQL> INSERT INTO SHIPPER VALUES (500,
+  2                  'ABC Trans-Oceanic', '800-234-5656', '800-234-5659',
+  3                  'Sales@ABCTransOceanic.com', 'Jonathan');
+
+1 row created.
+
+SQL> INSERT INTO SHIPPER VALUES (550,
+  2                  'International', '800-123-8898', '800-123-8899',
+  3                  'Sales@International.com', 'Marilyn');
+
+1 row created.
+
+SQL> INSERT INTO SHIPPER VALUES (600,
+  2                  'Worldwide', '800-123-4567', '800-123-4569',
+  3                  'Sales@Worldwide.com', 'Jose');
+
+1 row created.
+
+SQL> 
+SQL> /* ****   ITEM Data   ***********************************************************/
+SQL> 
+SQL> INSERT INTO ITEM VALUES (10,'Antique large bureaus', 101, '10-Dec-14', 'Antique Large Bureaus', 'Furniture', 13415);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO ITEM VALUES (20,'Eastern Treasures', 102, '12-Dec-14', 'Porcelain Lamps', 'Lamps', 13300);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO ITEM VALUES (30,'Eastern Treasures', 104, '15-Dec-14', 'Gold Rim Design China', 'Tableware', 38500);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO ITEM VALUES (40,'Gold Rim design china', 104, '16-Dec-14', 'Gold Rim Design Serving Dishes','Tableware', 3200);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO ITEM VALUES (50,'Porcelain lamps', 102, '07-Apr-15', 'QE Dining Set', 'Furniture', 14300);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO ITEM VALUES (60,'Gold Rim design china', 103, '18-May-15', 'Misc Linen', 'Linens', 88545);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO ITEM VALUES (70, 'Antique large bureaus', 103, '19-May-15', 'Large Masks', 'Decorations', 22135);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO ITEM VALUES (80, 'Porcelain lamps', 104, '20-May-15', 'Willow Design China', 'Tableware', 147575);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO ITEM VALUES (90, 'Gold Rim design china', 104, '20-May-15', 'Willow Design Serving Dishes', 'Tableware', 12040);
+
+1 row created.
+
+SQL> 
+SQL> 
+SQL> /* ****   SHIPMENT Data   ***********************************************************/
+SQL> 
+SQL> INSERT INTO SHIPMENT VALUES (222, 500, 103, 2010651, 'Manila', 'Los Angeles', '10-Dec-14', '10-Dec-14', '15-Mar-15');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO SHIPMENT VALUES (777, 500, 104, 2011012, 'Hong Kong', 'Seattle', '10-Jan-15', '12-Jan-15', '20-Mar-15');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO SHIPMENT VALUES (888,600, 103, 49100300, 'Manila', 'Los Angeles', '05-May-15', '05-May-15', '17-Jun-15');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO SHIPMENT VALUES (555, 550 ,104, 399400, 'Singapore', 'Portland', '02-Jun-15', '04-Jun-15','17-Jul-15' );
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO SHIPMENT VALUES (444, 600, 103, 84899440, 'Lima', 'Los Angeles', '10-Jul-15', '10-Jul-15', '28-Jul-15');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO SHIPMENT VALUES (333, 550, 104, 488955,  'Singapore', 'Portland', '05-Aug-15', '09-Aug-15', '11-Sep-15');
+
+1 row created.
+
+SQL> 
+SQL> /* ****   SHIPMENT Item   ***********************************************************/
+SQL> 
+SQL> INSERT INTO SHIPMENT_ITEM VALUES(777, 500, 10, 15000);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO SHIPMENT_ITEM VALUES(777, 505, 20, 15000);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO SHIPMENT_ITEM VALUES(888, 510, 10, 40000);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO SHIPMENT_ITEM VALUES(888, 515, 20, 3500);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO SHIPMENT_ITEM VALUES(555, 520, 10, 15000);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO SHIPMENT_ITEM VALUES(444, 525, 10, 90000);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO SHIPMENT_ITEM VALUES(444, 530, 20, 25000);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO SHIPMENT_ITEM VALUES(444, 535, 30, 150000);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO SHIPMENT_ITEM VALUES(222, 540, 40, 12500);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO SHIPMENT_ITEM VALUES(333, 545, 10, 12500);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO SHIPMENT_ITEM VALUES(333, 550, 20, 5500);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO SHIPMENT_ITEM VALUES(333, 535, 10, 4500);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO SHIPMENT_ITEM VALUES(777, 560, 20, 10000);
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO SHIPMENT_ITEM VALUES(777, 565, 30, 1500);
+
+1 row created.
+
+SQL> 
+SQL> /* Query 3 */
+SQL> 
+SQL> ALTER TABLE item
+  2  ADD date_added date;
+
+Table altered.
+
+SQL> 
+SQL> /* Query 4 */
+SQL> 
+SQL> ALTER TABLE shipper
+  2  MODIFY shipper_name varchar2(20) not null;
+
+Table altered.
+
+SQL> 
+SQL> /* Query 5 */
+SQL> 
+SQL> describe shipper;
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ SHIPPER_ID                                                                                                        NOT NULL NUMBER(3)
+ SHIPPER_NAME                                                                                                      NOT NULL VARCHAR2(20)
+ PHONE                                                                                                                      VARCHAR2(14)
+ FAX                                                                                                                        VARCHAR2(14)
+ EMAIL_ADDRESS                                                                                                              VARCHAR2(50)
+ CONTACT                                                                                                                    VARCHAR2(30)
+
+SQL> describe item;
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ ITEM_ID                                                                                                           NOT NULL NUMBER(2)
+ STORE_NAME                                                                                                                 VARCHAR2(30)
+ PURCHASHING_AGENT_ID                                                                                                       NUMBER(3)
+ PURCHASE_DATE                                                                                                              DATE
+ ITEM_DESCRIPTION                                                                                                           VARCHAR2(100)
+ CATEGORY                                                                                                                   VARCHAR2(50)
+ PRICE_USD                                                                                                                  NUMBER(10)
+ DATE_ADDED                                                                                                                 DATE
+
+SQL> 
+SQL> /* Query 6*/
+SQL> 
+SQL> SELECT shipment_id, shipment_item_id, item_id, insured_value
+  2  FROM shipment_item;
+
+SHIPMENT_ID SHIPMENT_ITEM_ID    ITEM_ID INSURED_VALUE
+----------- ---------------- ---------- -------------
+        777              500         10         15000
+        777              505         20         15000
+        888              510         10         40000
+        888              515         20          3500
+        555              520         10         15000
+        444              525         10         90000
+        444              530         20         25000
+        444              535         30        150000
+        222              540         40         12500
+        333              545         10         12500
+        333              550         20          5500
+        333              535         10          4500
+        777              560         20         10000
+        777              565         30          1500
+
+14 rows selected.
+
+SQL> 
+SQL> /* Query 7 */
+SQL> 
+SQL> SELECT shipper_id, shipper_name, contact
+  2  FROM shipper;
+
+SHIPPER_ID SHIPPER_NAME         CONTACT
+---------- -------------------- ------------------------------
+       500 ABC Trans-Oceanic    Jonathan
+       550 International        Marilyn
+       600 Worldwide            Jose
+
+3 rows selected.
+
+SQL> 
+SQL> /* Query 8 */
+SQL> 
+SQL> SELECT shipment_id, item_id, insured_value
+  2  FROM shipment_item
+  3  WHERE insured_value > 10000;
+
+SHIPMENT_ID    ITEM_ID INSURED_VALUE
+----------- ---------- -------------
+        777         10         15000
+        777         20         15000
+        888         10         40000
+        555         10         15000
+        444         10         90000
+        444         20         25000
+        444         30        150000
+        222         40         12500
+        333         10         12500
+
+9 rows selected.
+
+SQL> 
+SQL> /* Query 9 */
+SQL> 
+SQL> SELECT shipper_id, shipper_name, email_address
+  2  FROM shipper
+  3  WHERE shipper_name
+  4  LIKE 'AB%';
+
+SHIPPER_ID SHIPPER_NAME         EMAIL_ADDRESS
+---------- -------------------- --------------------------------------------------
+       500 ABC Trans-Oceanic    Sales@ABCTransOceanic.com
+
+1 row selected.
+
+SQL> 
+SQL> spool off

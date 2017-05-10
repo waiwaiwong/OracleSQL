@@ -1,0 +1,163 @@
+SQL> @ waiwaiwong_assignment8.sql
+SQL> SET feedback 1
+SQL> SET pagesize 999
+SQL> SET trimspool on
+SQL> SET linesize 200
+SQL> SET tab off
+SQL> CLEAR columns
+SQL> 
+SQL> /* Wai Wai Wong */
+SQL> 
+SQL> /* Query 0 */
+SQL> SELECT user, sysdate
+  2  FROM dual;
+
+USER                           SYSDATE
+------------------------------ ---------
+WWONG39                        17-MAR-17
+
+1 row selected.
+
+SQL> 
+SQL> /* Query 1 */
+SQL> 
+SQL> select count(distinct student_id)
+  2  from registration
+  3  where sec_id = 1
+  4  and semester_id = 'Fa09';
+
+COUNT(DISTINCTSTUDENT_ID)
+-------------------------
+                        7
+
+1 row selected.
+
+SQL> 
+SQL> /* Query 2 */
+SQL> 
+SQL> select distinct sec_id
+  2  from registration
+  3  where course_id = 'CS-190'
+  4  and semester_id = 'Sp09';
+
+SEC_ID
+--------
+2
+
+1 row selected.
+
+SQL> 
+SQL> /* Query 3 */
+SQL> 
+SQL> 
+SQL> /* Query 4 */
+SQL> 
+SQL> select avg(birth_date)as average,
+  2         min(birth_date) as minimum,
+  3         max(birth_date) as max
+  4  from student;
+select avg(birth_date)as average,
+           *
+ERROR at line 1:
+ORA-00932: inconsistent datatypes: expected NUMBER got DATE
+
+
+SQL> 
+SQL> 
+SQL> 
+SQL> /* Query 5 */
+SQL> 
+SQL> select count(distinct faculty_id) as num_faculty, dept_id
+  2  from faculty
+  3  group by dept_id;
+
+NUM_FACULTY    DEPT_ID
+----------- ----------
+          1          1
+          1          6
+          3          2
+          2          5
+          2          4
+          1          8
+          2          7
+          1          3
+
+8 rows selected.
+
+SQL> 
+SQL> /* Query 6*/
+SQL> 
+SQL> select count(distinct faculty_id)
+  2  from teaches
+  3  where semester_id = 'Sp10';
+
+COUNT(DISTINCTFACULTY_ID)
+-------------------------
+                        6
+
+1 row selected.
+
+SQL> 
+SQL> /* Query 7 */
+SQL> 
+SQL> select count(distinct faculty_id) as "Number of Instructors"
+  2  from advisor;
+
+Number of Instructors
+---------------------
+                    5
+
+1 row selected.
+
+SQL> 
+SQL> /* Query 8 */
+SQL> 
+SQL> select dept_id, count(distinct faculty_id)
+  2  from faculty natural left outer join teaches
+  3  where semester_id = 'Sp10'
+  4  group by dept_id;
+
+   DEPT_ID COUNT(DISTINCTFACULTY_ID)
+---------- -------------------------
+         6                         1
+         2                         3
+         5                         1
+         4                         1
+
+4 rows selected.
+
+SQL> 
+SQL> /* Query 9 */
+SQL> 
+SQL> select dept_name, count(faculty_id)
+  2  from dept natural left outer join faculty
+  3  group by dept_name;
+
+DEPT_NAME            COUNT(FACULTY_ID)
+-------------------- -----------------
+Elec. Eng.                           1
+Physics                              2
+Comp. Sci.                           3
+English                              1
+Finance                              2
+Biology                              1
+Music                                1
+History                              2
+
+8 rows selected.
+
+SQL> 
+SQL> /* Query 10 */
+SQL> 
+SQL> select sec_id, course_id, count(student_id)
+  2  over (partition by sec_id)
+  3  from registration
+  4  where sec_id = 1
+  5  and course_id in 'EN-1000';
+
+no rows selected
+
+SQL> 
+SQL> /* Query 11 */
+SQL> 
+SQL> spool off

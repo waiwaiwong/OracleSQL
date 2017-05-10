@@ -1,0 +1,61 @@
+SET echo on
+SET feedback 1
+SET pagesize 999
+SET trimspool on
+SET linesize 200
+SET tab off
+CLEAR columns
+
+/* Wai Wai Wong */ 
+
+/* Query 0 */
+SELECT user, sysdate 
+FROM dual;
+
+/* Query 1 */
+
+ select distinct course_id
+from section
+where semester_id = 'Fa09'
+and course_id not in
+(select course_id
+from section
+where semester_id = 'Fa10');
+  
+
+/* Query 2 */
+
+
+
+/* Query 3 */
+
+delete from faculty
+where dept_name in (select dept_name
+                    from dept
+                    where building = 'Watson');
+
+
+
+
+/* Query 4 */
+
+
+
+/* Query 5 */
+
+select count(distinct id)
+from takes
+where (course_id, sec_id, semester, year)
+in (select course_id, sec_id, semester, year
+    from teaches
+    where teaches.id = 10101)
+
+/* Query 6*/
+
+
+
+/* Query 7 */
+
+
+/* Query 8 */
+

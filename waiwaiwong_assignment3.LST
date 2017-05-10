@@ -1,0 +1,239 @@
+SQL> @waiwaiwong_assignment3.sql
+SQL> SET echo on
+SQL> SET feedback 1
+SQL> SET pagesize 999
+SQL> SET trimspool on
+SQL> SET linesize 200
+SQL> SET tab off
+SQL> CLEAR columns
+SQL> 
+SQL> /* Wai Wai Wong */
+SQL> 
+SQL> /* Query 1 */
+SQL> 
+SQL> SELECT faculty_id, name, dept_ID, salary
+  2  FROM faculty
+  3  WHERE dept_ID IN(1,2);
+
+FACUL NAME                    DEPT_ID     SALARY
+----- -------------------- ---------- ----------
+10101 Srinivasan                    2      65000
+45565 Katz                          2      75000
+76766 Crick                         1      72000
+83821 Brandt                        2      92000
+
+4 rows selected.
+
+SQL> 
+SQL> 
+SQL> /* Query 2 */
+SQL> 
+SQL> SELECT student_id, last_name, first_name, state
+  2  FROM student
+  3  WHERE state='NY'
+  4  OR state='NJ'
+  5  ORDER BY last_name ASC;
+
+STUDE LAST_NAME       FIRST_NAME      ST
+----- --------------- --------------- --
+8765  Bourikas        Brian           NY
+19991 Brandt          Rajesh          NJ
+76543 Brown           Snow            NY
+23121 Chavez          Deborah         NJ
+98988 George          Tanaka          NJ
+70557 John            Snow            NY
+98765 John            Ho              NY
+45678 Levy            Amir            NJ
+44553 Peltier         Brian           NY
+55739 Sanchez         Sam             NJ
+12345 Shankar         Mickey          NY
+54321 Williams        Amr             NJ
+00128 Zhang           Jose            NJ
+
+13 rows selected.
+
+SQL> 
+SQL> /* Query 3 */
+SQL> 
+SQL> SELECT faculty_id, name, dept_ID, salary
+  2  FROM faculty
+  3  WHERE name LIKE 'C%';
+
+FACUL NAME                    DEPT_ID     SALARY
+----- -------------------- ---------- ----------
+58583 Califieri                     5      62000
+76766 Crick                         1      72000
+
+2 rows selected.
+
+SQL> 
+SQL> /* Query 4 */
+SQL> 
+SQL> SELECT name, salary
+  2  FROM faculty
+  3  WHERE salary BETWEEN 50000.00 AND 70000.00
+  4  ORDER BY salary ASC;
+
+NAME                     SALARY
+-------------------- ----------
+El Said                   60000
+Califieri                 62000
+Srinivasan                65000
+
+3 rows selected.
+
+SQL> 
+SQL> /* Query 5 */
+SQL> 
+SQL> SELECT course_id, sec_id, semester_id, year, building, room_number
+  2  FROM section
+  3  WHERE semester_id LIKE 'Fa%'
+  4  OR semester_id LIKE 'Sp%';
+
+COURSE_ID  SEC_ID   SEME       YEAR BUILDING        ROOM_NU
+---------- -------- ---- ---------- --------------- -------
+CS-101     1        Fa09       2009 Packard         101
+CS-101     1        Sp10       2010 Packard         101
+CS-190     1        Sp09       2009 Taylor          3128
+CS-190     2        Sp09       2009 Taylor          3128
+CS-315     1        Sp10       2010 Watson          120
+CS-319     1        Sp10       2010 Watson          100
+CS-319     2        Sp10       2010 Taylor          3128
+CS-347     1        Sp09       2009 Taylor          3128
+EE-181     1        Sp09       2009 Taylor          3128
+FIN-201    1        Sp10       2010 Packard         101
+HIS-351    1        Sp10       2010 Painter         514
+MU-199     1        Sp10       2010 Packard         101
+PHY-101    1        Fa09       2009 Watson          100
+EN-1000    1        Sp09       2009 Watson          100
+
+14 rows selected.
+
+SQL> 
+SQL> /* Query 6*/
+SQL> 
+SQL> SELECT name, dept_id
+  2  FROM faculty
+  3  WHERE name BETWEEN 'M' AND 'Z';
+
+NAME                    DEPT_ID
+-------------------- ----------
+Srinivasan                    2
+Wu                            4
+Mozart                        6
+Singh                         4
+
+4 rows selected.
+
+SQL> 
+SQL> /* Query 7 */
+SQL> 
+SQL> SELECT dept_name
+  2  FROM dept
+  3  WHERE building='Painter';
+
+DEPT_NAME
+--------------------
+Finance
+History
+
+2 rows selected.
+
+SQL> 
+SQL> /* Query 8 */
+SQL> 
+SQL> SELECT student_id, course_id, sec_id, semester_id, year, grade
+  2  FROM registration
+  3  WHERE grade IS NULL;
+
+STUDE COURSE_I SEC_ID   SEME       YEAR GR
+----- -------- -------- ---- ---------- --
+98988 BIO-301  1        Su10       2010
+
+1 row selected.
+
+SQL> 
+SQL> /* Query 9 */
+SQL> 
+SQL> SELECT course_id, title
+  2  FROM course
+  3  WHERE title LIKE'Intro%';
+
+COURSE_ID  TITLE
+---------- --------------------------------------------------
+BIO-101    Intro. to Biology
+CS-101     Intro. to Computer Science
+EE-181     Intro. to Digital Systems
+
+3 rows selected.
+
+SQL> 
+SQL> /* Query 10 */
+SQL> 
+SQL> SELECT course_id, sec_id, year, building
+  2  FROM section
+  3  WHERE semester_id LIKE 'Su%';
+
+COURSE_ID  SEC_ID         YEAR BUILDING
+---------- -------- ---------- ---------------
+BIO-101    1              2009 Painter
+BIO-301    1              2010 Painter
+
+2 rows selected.
+
+SQL> 
+SQL> /* Query 11 */
+SQL> 
+SQL> SELECT building, room_number, capacity
+  2  FROM classroom
+  3  WHERE capacity BETWEEN 30 AND 70;
+
+BUILDING        ROOM_NU   CAPACITY
+--------------- ------- ----------
+Taylor          3128            70
+Watson          100             30
+Watson          120             50
+
+3 rows selected.
+
+SQL> 
+SQL> /* Query 12 */
+SQL> 
+SQL> SELECT *
+  2  FROM classroom
+  3  WHERE capacity > 30
+  4  AND building = 'Taylor';
+
+BUILDING        ROOM_NU   CAPACITY
+--------------- ------- ----------
+Taylor          3128            70
+
+1 row selected.
+
+SQL> 
+SQL> /* Query 13 */
+SQL> 
+SQL> SELECT name, dept_id
+  2  FROM faculty
+  3  WHERE name NOT LIKE 'Mozart'
+  4  OR name NOT LIKE 'Einstein';
+
+NAME                    DEPT_ID
+-------------------- ----------
+Srinivasan                    2
+Wu                            4
+Mozart                        6
+Einstein                      7
+El Said                       5
+Gold                          7
+Katz                          2
+Califieri                     5
+Singh                         4
+Crick                         1
+Brandt                        2
+Kim                           3
+Brad                          8
+
+13 rows selected.
+
+SQL> spool off

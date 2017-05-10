@@ -1,0 +1,203 @@
+SQL> @ waiwaiwong_assignment4.sql
+SQL> SET feedback 1
+SQL> SET pagesize 999
+SQL> SET trimspool on
+SQL> SET linesize 200
+SQL> SET tab off
+SQL> CLEAR columns
+SQL> 
+SQL> /* Wai Wai Wong */
+SQL> 
+SQL> /* Query 0 */
+SQL> SELECT user, sysdate
+  2  FROM dual;
+
+USER                           SYSDATE
+------------------------------ ---------
+WWONG39                        13-FEB-17
+
+1 row selected.
+
+SQL> 
+SQL> /* Query 1 */
+SQL> 
+SQL> create table vendor
+  2  (vendor_id number(2)not null,
+  3   name varchar2(30) not null,
+  4   address1 varchar2(30),
+  5   address2 varchar2(30),
+  6   city varchar2(12),
+  7   state varchar2(12),
+  8   zip_code varchar2(5),
+  9   phone varchar2(14),
+ 10   contact_last_name varchar2(20),
+ 11   contact_first_name varchar2(20),
+ 12   primary key (vendor_id)
+ 13   );
+
+Table created.
+
+SQL> 
+SQL> /* Query 2 */
+SQL> 
+SQL> -- INSERT INTO vendor
+SQL> INSERT INTO vendor
+  2  (vendor_id,name,address1,address2,city,state,zip_code,phone,contact_last_name,contact_first_name)
+  3  VALUES (1,'US Postal Service','Attn:  Supt. Window Services','PO Box 7005','Madison','WI','53707','(800) 555-1205','Alberto','Francesco');
+
+1 row created.
+
+SQL> INSERT INTO vendor
+  2  (vendor_id,name,address1,address2,city,state,zip_code,phone,contact_last_name,contact_first_name)
+  3  VALUES (2,'National Information Data Ctr','PO Box 96621','NULL','Washington','DC','20090','(301) 555-8950','Irvin','Ania');
+
+1 row created.
+
+SQL> INSERT INTO vendor
+  2  (vendor_id,name,address1,address2,city,state,zip_code,phone,contact_last_name,contact_first_name)
+  3  VALUES (3,'Register of Copyrights','Library Of Congress','NULL','Washington','DC','20559','NULL','Liana','Lukas');
+
+1 row created.
+
+SQL> INSERT INTO vendor
+  2   (vendor_id,name,address1,address2,city,state,zip_code,phone,contact_last_name,contact_first_name)
+  3  VALUES (4,'Jobtrak','1990 Westwood Blvd Ste 260','NULL','Los Angeles','CA','90025','(800) 555-8725','Quinn','Kenzie');
+
+1 row created.
+
+SQL> INSERT INTO vendor
+  2  (vendor_id,name,address1,address2,city,state,zip_code,phone,contact_last_name,contact_first_name)
+  3  VALUES (5,'Newbrige Book Clubs','3000 Cindel Drive','NULL','Washington','NJ','07882','(800) 555-9980','Marks','Michelle');
+
+1 row created.
+
+SQL> 
+SQL> 
+SQL> /* Query 3 */
+SQL> 
+SQL> alter table vendor
+  2  add vendor_email varchar2(50);
+
+Table altered.
+
+SQL> 
+SQL> /* Query 4 */
+SQL> 
+SQL> select *
+  2  from vendor;
+
+ VENDOR_ID NAME                           ADDRESS1                       ADDRESS2                       CITY         STATE        ZIP_C PHONE          CONTACT_LAST_NAME    CONTACT_FIRST_NAME
+---------- ------------------------------ ------------------------------ ------------------------------ ------------ ------------ ----- -------------- -------------------- --------------------
+VENDOR_EMAIL
+--------------------------------------------------
+         1 US Postal Service              Attn:  Supt. Window Services   PO Box 7005                    Madison      WI           53707 (800) 555-1205 Alberto              Francesco
+
+
+         2 National Information Data Ctr  PO Box 96621                   NULL                           Washington   DC           20090 (301) 555-8950 Irvin                Ania
+
+
+         3 Register of Copyrights         Library Of Congress            NULL                           Washington   DC           20559 NULL           Liana                Lukas
+
+
+         4 Jobtrak                        1990 Westwood Blvd Ste 260     NULL                           Los Angeles  CA           90025 (800) 555-8725 Quinn                Kenzie
+
+
+         5 Newbrige Book Clubs            3000 Cindel Drive              NULL                           Washington   NJ           07882 (800) 555-9980 Marks                Michelle
+
+
+
+5 rows selected.
+
+SQL> 
+SQL> /* Query 5 */
+SQL> 
+SQL> describe vendor;
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ VENDOR_ID                                                                                                         NOT NULL NUMBER(2)
+ NAME                                                                                                              NOT NULL VARCHAR2(30)
+ ADDRESS1                                                                                                                   VARCHAR2(30)
+ ADDRESS2                                                                                                                   VARCHAR2(30)
+ CITY                                                                                                                       VARCHAR2(12)
+ STATE                                                                                                                      VARCHAR2(12)
+ ZIP_CODE                                                                                                                   VARCHAR2(5)
+ PHONE                                                                                                                      VARCHAR2(14)
+ CONTACT_LAST_NAME                                                                                                          VARCHAR2(20)
+ CONTACT_FIRST_NAME                                                                                                         VARCHAR2(20)
+ VENDOR_EMAIL                                                                                                               VARCHAR2(50)
+
+SQL> 
+SQL> /* Query 6*/
+SQL> 
+SQL> alter table vendor
+  2  drop column vendor_email;
+
+Table altered.
+
+SQL> 
+SQL> 
+SQL> /* Query 7 */
+SQL> 
+SQL> alter table vendor
+  2  rename to vendor_backup;
+
+Table altered.
+
+SQL> 
+SQL> /* Query 8 */
+SQL> 
+SQL> select table_name
+  2  from user_tables;
+
+TABLE_NAME
+--------------------------------------------------------------------------------------------------------------------------------
+CLASSROOM
+DEPT
+MAJOR
+COURSE
+FACULTY
+SEMESTER
+SECTION
+TEACHES
+STUDENT
+REGISTRATION
+ADVISOR
+PREREQ
+CUSTOMERS
+ORDERS
+PUBLISHER
+AUTHOR
+CATEGORY
+BOOKS
+ORDERITEMS
+BOOKAUTHOR
+DEPARTMENTS
+EMPLOYEES
+VENDOR_BACKUP
+
+23 rows selected.
+
+SQL> 
+SQL> /* Query 9 */
+SQL> 
+SQL> drop table vendor_backup;
+
+Table dropped.
+
+SQL> 
+SQL> /* Query 10 */
+SQL> 
+SQL> alter table employees
+  2  add SalaryYearToDate number(15);
+
+Table altered.
+
+SQL> 
+SQL> /* Query 11 */
+SQL> 
+SQL> alter table employees
+  2  drop column SalaryYearToDate;
+
+Table altered.
+
+SQL> spool off

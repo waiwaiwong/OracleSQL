@@ -1,0 +1,166 @@
+SQL> @ waiwaiwong_assignment11.sql
+SQL> SET echo on
+SQL> SET feedback 1
+SQL> SET pagesize 999
+SQL> SET trimspool on
+SQL> SET linesize 200
+SQL> SET tab off
+SQL> CLEAR columns
+SQL> 
+SQL> /* Wai Wai Wong */
+SQL> 
+SQL> /* Query 0 */
+SQL> SELECT user, sysdate
+  2  FROM dual;
+
+USER                           SYSDATE
+------------------------------ ---------
+WWONG39                        17-APR-17
+
+1 row selected.
+
+SQL> 
+SQL> /* Query 1 */
+SQL> 
+SQL> create view contact
+  2  as
+  3  select name, phone
+  4  from publisher;
+
+View created.
+
+SQL> 
+SQL> 
+SQL> /* Query 2 */
+SQL> 
+SQL> create or replace view contact
+  2  as
+  3  select name, phone
+  4  from publisher
+  5  with read only;
+
+View created.
+
+SQL> 
+SQL> /* Query 3 */
+SQL> 
+SQL> create view Reorderinfo
+  2  as
+  3  select isbn, title, contact, phone
+  4  from books
+  5  join publisher using (pubid);
+
+View created.
+
+SQL> 
+SQL> 
+SQL> /* Query 4 */
+SQL> 
+SQL> update Reorderinfo
+  2  set contact = 'YOUR NAME'
+  3  where contact = 'Wai Wai Wong';
+set contact = 'YOUR NAME'
+    *
+ERROR at line 2:
+ORA-01779: cannot modify a column which maps to a non key-preserved table
+
+
+SQL> 
+SQL> /* Yes error has occured. Its because I am trying to change a value that is uniquely defined by a different field which is referenced by other. */
+SQL> 
+SQL> 
+SQL> /* Query 5 */
+SQL> 
+SQL> update Reorderinfo
+  2  set isbn = '1234567890'
+  3  where title = 'REVENGE OF MICKEY';
+update Reorderinfo
+*
+ERROR at line 1:
+ORA-02292: integrity constraint (WWONG39.ORDERITEMS_ISBN_FK) violated - child record found
+
+
+SQL> 
+SQL> /* Yes, error has occured. Its because there is another table that reference ISBN as a foreign key and is not allowed to change its value. */
+SQL> 
+SQL> /* Query 6*/
+SQL> 
+SQL> create view Orderproducts
+  2  as
+  3  select o.orderid, o.orderdate, o.shipdate,
+  4         oi.paideach, oi.quantity,
+  5         (oi.paideach * oi.quantity) AS final_price, b.title
+  6  from orders o, orderitems oi, books b
+  7  where o.orderid = oi.orderid
+  8  and oi.isbn = b.isbn;
+
+View created.
+
+SQL> 
+SQL> 
+SQL> /* Query 7 */
+SQL> 
+SQL> select *
+  2  from Orderproducts;
+
+   ORDERID ORDERDATE SHIPDATE    PAIDEACH   QUANTITY FINAL_PRICE TITLE
+---------- --------- --------- ---------- ---------- ----------- ------------------------------
+      1000 31-MAR-09 02-APR-09      19.95          1       19.95 COOKING WITH MUSHROOMS
+      1001 31-MAR-09 01-APR-09      85.45          1       85.45 PAINLESS CHILD-REARING
+      1001 31-MAR-09 01-APR-09      31.95          1       31.95 HOW TO MANAGE THE MANAGER
+      1002 31-MAR-09 01-APR-09      55.95          2       111.9 DATABASE IMPLEMENTATION
+      1003 01-APR-09 01-APR-09      19.95          1       19.95 COOKING WITH MUSHROOMS
+      1003 01-APR-09 01-APR-09      30.95          1       30.95 BODYBUILD IN 10 MINUTES A DAY
+      1003 01-APR-09 01-APR-09      55.95          1       55.95 DATABASE IMPLEMENTATION
+      1004 01-APR-09 05-APR-09      85.45          2       170.9 PAINLESS CHILD-REARING
+      1005 01-APR-09 02-APR-09      39.95          1       39.95 SHORTEST POEMS
+      1006 01-APR-09 02-APR-09       54.5          1        54.5 E-BUSINESS THE EASY WAY
+      1007 02-APR-09 04-APR-09      55.95          1       55.95 DATABASE IMPLEMENTATION
+      1007 02-APR-09 04-APR-09       54.5          1        54.5 E-BUSINESS THE EASY WAY
+      1007 02-APR-09 04-APR-09      72.15          3      216.45 HOLY GRAIL OF ORACLE
+      1008 02-APR-09 03-APR-09      19.95          2        39.9 COOKING WITH MUSHROOMS
+      1009 03-APR-09 05-APR-09         22          1          22 REVENGE OF MICKEY
+      1009 03-APR-09 05-APR-09      19.95          1       19.95 COOKING WITH MUSHROOMS
+      1010 03-APR-09 04-APR-09      55.95          1       55.95 DATABASE IMPLEMENTATION
+      1011 03-APR-09 05-APR-09      85.45          1       85.45 PAINLESS CHILD-REARING
+      1012 03-APR-09                   22          1          22 REVENGE OF MICKEY
+      1012 03-APR-09                85.45          1       85.45 PAINLESS CHILD-REARING
+      1012 03-APR-09                   25          2          50 HANDCRANKED COMPUTERS
+      1013 03-APR-09 04-APR-09      55.95          1       55.95 DATABASE IMPLEMENTATION
+      1014 04-APR-09 05-APR-09         22          2          44 REVENGE OF MICKEY
+      1015 04-APR-09                19.95          1       19.95 COOKING WITH MUSHROOMS
+      1016 04-APR-09                85.45          1       85.45 PAINLESS CHILD-REARING
+      1018 05-APR-09                55.95          1       55.95 DATABASE IMPLEMENTATION
+      1018 05-APR-09                19.95          1       19.95 COOKING WITH MUSHROOMS
+      1019 05-APR-09                   22          1          22 REVENGE OF MICKEY
+      1020 05-APR-09                19.95          1       19.95 COOKING WITH MUSHROOMS
+
+29 rows selected.
+
+SQL> 
+SQL> /* Query 8 */
+SQL> 
+SQL> create view Productsummary
+  2  as
+  3  select distinct title, count(title)over(partition by title) as order_count
+  4  from Orderproducts;
+
+View created.
+
+SQL> 
+SQL> /* Query 9 */
+SQL> 
+SQL> select *
+  2  from (select * from productsummary order by order_count desc)
+  3  where rownum <= 3
+  4  order by rownum;
+
+TITLE                          ORDER_COUNT
+------------------------------ -----------
+COOKING WITH MUSHROOMS                   7
+DATABASE IMPLEMENTATION                  6
+PAINLESS CHILD-REARING                   5
+
+3 rows selected.
+
+SQL> spool off
