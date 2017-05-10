@@ -1,0 +1,279 @@
+SQL> @ waiwaiwong_assignment7.sql
+SQL> SET feedback 1
+SQL> SET pagesize 999
+SQL> SET trimspool on
+SQL> SET linesize 200
+SQL> SET tab off
+SQL> CLEAR columns
+SQL> 
+SQL> /* Wai Wai Wong */
+SQL> 
+SQL> /* Query 0 */
+SQL> SELECT user, sysdate
+  2  FROM dual;
+
+USER                           SYSDATE
+------------------------------ ---------
+WWONG39                        06-MAR-17
+
+1 row selected.
+
+SQL> 
+SQL> /* Query 1 */
+SQL> 
+SQL> select s.student_id, s.last_name, r.course_id, r.sec_id
+  2  from student s, registration r
+  3  where s.student_id = r.student_id
+  4  and r.course_id = 'CS-101'
+  5  and r.sec_id = 1;
+
+STUDE LAST_NAME       COURSE_I SEC_ID
+----- --------------- -------- --------
+00128 Zhang           CS-101   1
+12345 Shankar         CS-101   1
+45678 Levy            CS-101   1
+45678 Levy            CS-101   1
+54321 Williams        CS-101   1
+76543 Brown           CS-101   1
+98765 John            CS-101   1
+
+7 rows selected.
+
+SQL> 
+SQL> 
+SQL> /* Query 2 */
+SQL> 
+SQL> select s.last_name, s.first_name, m.major_desc
+  2  from student s, major m
+  3  where s.major_id = m.major_id;
+
+LAST_NAME       FIRST_NAME      MAJOR_DESC
+--------------- --------------- -------------------------
+George          Tanaka          AAS-Biology
+Zhang           Jose            AAS-Computer Science
+John            Ho              AAS-Computer Science
+Shankar         Mickey          AAS-Computer Science
+Brown           Snow            AAS-lec. Eng.
+Bourikas        Brian           AAS-lec. Eng.
+Chavez          Deborah         BS-Finance
+Brandt          Rajesh          BS-History
+Sanchez         Sam             BS-Music
+John            Snow            BS-Physics
+Levy            Amir            BS-Physics
+Peltier         Brian           BS-Physics
+Williams        Amr             BS-Physics
+
+13 rows selected.
+
+SQL> 
+SQL> 
+SQL> /* Query 3 */
+SQL> 
+SQL> select s.last_name, s.first_name, r.course_id, r.sec_id, r.grade
+  2  from student s, registration r
+  3  where s.student_id = r.student_id
+  4  and r.grade = 'A'
+  5  and r.semester_id = 'Fa09';
+
+LAST_NAME       FIRST_NAME      COURSE_I SEC_ID   GR
+--------------- --------------- -------- -------- --
+Zhang           Jose            CS-101   1        A
+Brown           Snow            CS-101   1        A
+
+2 rows selected.
+
+SQL> 
+SQL> /* Query 4 */
+SQL> 
+SQL> select t.course_id, t.sec_id, f.name, t.semester_id
+  2  from teaches t, faculty f
+  3  where t.faculty_id (+) = f.faculty_id
+  4  and t.semester_id = 'Sp09';
+
+COURSE_ID  SEC_ID   NAME                 SEME
+---------- -------- -------------------- ----
+CS-347     1        Srinivasan           Sp09
+CS-190     1        Brandt               Sp09
+CS-190     2        Brandt               Sp09
+EE-181     1        Kim                  Sp09
+EN-1000    1        Brad                 Sp09
+
+5 rows selected.
+
+SQL> 
+SQL> 
+SQL> /* Query 5 *
+SQL> 
+SQL> select c.title as course, c.prereq as prereq
+SQL> from course c
+SQL> left outer join prereq p
+SQL> on c.course_id = p.course_id;
+SQL> 
+SQL> /* Query 6*/
+SQL> 
+SQL> select f.name, c.course_id
+  2  from faculty f
+  3  left outer join course c
+  4  on f.dept_id = c.dept_id;
+
+NAME                 COURSE_ID
+-------------------- ----------
+Crick                BIO-101
+Crick                BIO-301
+Crick                BIO-399
+Brandt               CS-101
+Katz                 CS-101
+Srinivasan           CS-101
+Brandt               CS-190
+Katz                 CS-190
+Srinivasan           CS-190
+Brandt               CS-315
+Katz                 CS-315
+Srinivasan           CS-315
+Brandt               CS-319
+Katz                 CS-319
+Srinivasan           CS-319
+Brandt               CS-347
+Katz                 CS-347
+Srinivasan           CS-347
+Kim                  EE-181
+Singh                FIN-201
+Wu                   FIN-201
+Califieri            HIS-351
+El Said              HIS-351
+Mozart               MU-199
+Gold                 PHY-101
+Einstein             PHY-101
+Brad                 EN-1000
+
+27 rows selected.
+
+SQL> 
+SQL> /* Query 7 */
+SQL> 
+SQL> select s.student_id, s.last_name, r.course_id
+  2  from student s, registration r
+  3  where s.student_id = r.student_id;
+
+STUDE LAST_NAME       COURSE_I
+----- --------------- --------
+00128 Zhang           CS-347
+00128 Zhang           CS-101
+12345 Shankar         CS-190
+12345 Shankar         CS-101
+12345 Shankar         CS-315
+12345 Shankar         CS-347
+19991 Brandt          HIS-351
+23121 Chavez          FIN-201
+44553 Peltier         PHY-101
+45678 Levy            CS-101
+45678 Levy            CS-101
+45678 Levy            CS-319
+54321 Williams        CS-101
+54321 Williams        CS-190
+55739 Sanchez         MU-199
+76543 Brown           CS-101
+76543 Brown           CS-319
+98765 John            CS-101
+98765 John            CS-315
+98765 John            EE-181
+98988 George          BIO-101
+98988 George          BIO-301
+
+22 rows selected.
+
+SQL> 
+SQL> /* Query 8 */
+SQL> 
+SQL> select f.name, c.course_id
+  2  from faculty f
+  3  join course c
+  4  on c.dept_id = f. dept_id
+  5  join dept d
+  6  on d.dept_id = c.dept_id
+  7  where d.dept_ID = 5;
+
+NAME                 COURSE_ID
+-------------------- ----------
+El Said              HIS-351
+Califieri            HIS-351
+
+2 rows selected.
+
+SQL> 
+SQL> /* Query 9 */
+SQL> 
+SQL> select c.course_id, c.title, s.semester_id
+  2  from course c
+  3  left join section s
+  4  on c.course_id = s.course_id
+  5  and semester_id in ('Fa09','Sp10');
+
+COURSE_ID  TITLE                                              SEME
+---------- -------------------------------------------------- ----
+BIO-101    Intro. to Biology
+BIO-301    Genetics
+BIO-399    Computational Biology
+CS-101     Intro. to Computer Science                         Fa09
+CS-101     Intro. to Computer Science                         Sp10
+CS-190     Game Design
+CS-315     Robotics                                           Sp10
+CS-319     Image Processing                                   Sp10
+CS-319     Image Processing                                   Sp10
+CS-347     Database System Concepts
+EE-181     Intro. to Digital Systems
+EN-1000    Basic English
+FIN-201    Investment Banking                                 Sp10
+HIS-351    World History                                      Sp10
+MU-199     Music Video Production                             Sp10
+PHY-101    Physical Principles                                Fa09
+
+16 rows selected.
+
+SQL> 
+SQL> /* Query 10 */
+SQL> 
+SQL> select t.course_id, t.sec_id, f.name
+  2  from teaches t
+  3  left outer join faculty f
+  4  on t.faculty_id = f.faculty_id
+  5  where f.name = 'Singh';
+
+no rows selected
+
+SQL> 
+SQL> /* Query 11 */
+SQL> 
+SQL> select s.last_name || ',' || ' ' || s.first_name "Name"
+  2  from student s
+  3  join faculty f
+  4  on s.dept_id = f.dept_id
+  5  where s.state = 'NJ'
+  6  and f.name  = 'Kim'
+  7  order by s.last_name;
+
+no rows selected
+
+SQL> 
+SQL> /* Query 12 */
+SQL> 
+SQL> select f.name, r.course_id, r.sec_id
+  2  from faculty f
+  3  join student s
+  4  on f.dept_id = s.dept_id
+  5  join registration r
+  6  on s.student_id = r.student_id
+  7  where s.last_name like 'Z%';
+
+NAME                 COURSE_I SEC_ID
+-------------------- -------- --------
+Srinivasan           CS-101   1
+Srinivasan           CS-347   1
+Katz                 CS-101   1
+Katz                 CS-347   1
+Brandt               CS-101   1
+Brandt               CS-347   1
+
+6 rows selected.
+
+SQL> spool off
